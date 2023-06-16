@@ -11,7 +11,8 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include/
 set(SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 file(GLOB_RECURSE src ${SOURCE_DIR}/*.cpp ${SOURCE_DIR}/*.c)
 
-add_executable(Einsteinium ${src})
+add_executable(Einsteinium ${src}
+        src/main.cpp)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
