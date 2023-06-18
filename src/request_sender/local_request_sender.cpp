@@ -30,48 +30,48 @@ auto LocalRequestSender::inputParse() -> void {
     }
     // parse input
     std::stringstream ss{input_string};
-    std::string tocken_s;
-    int tocken_cnt = 0;
+    std::string token_s;
+    int token_cnt = 0;
     // std::vector<std::string> input_s;
     Request::method tmp_method;
     Request::type tmp_type;
     std::string tmp_orig_path;
     std::string tmp_dest_path;
 
-    while (ss >> tocken_s) {
-        switch (tocken_cnt) {
+    while (ss >> token_s) {
+        switch (token_cnt) {
         case 0:
-            if (auto tocken_parsed = magic_enum::enum_cast<Request::method>(getPrefix(tocken_cnt) + tocken_s);
-                tocken_parsed.has_value()) {
-                tmp_method = tocken_parsed.value();
+            if (auto token_parsed = magic_enum::enum_cast<Request::method>(getPrefix(token_cnt) + token_s);
+                token_parsed.has_value()) {
+                tmp_method = token_parsed.value();
             } else {
                 std::cerr << "[E] invalid input!" << std::endl;
                 std::cerr.flush();
             }
-            tocken_cnt++;
+            token_cnt++;
             break;
         case 1:
-            if (auto tocken_parsed = magic_enum::enum_cast<Request::type>(getPrefix(tocken_cnt) + tocken_s);
-                tocken_parsed.has_value()) {
-                tmp_type = tocken_parsed.value();
+            if (auto token_parsed = magic_enum::enum_cast<Request::type>(getPrefix(token_cnt) + token_s);
+                token_parsed.has_value()) {
+                tmp_type = token_parsed.value();
             } else {
                 std::cerr << "[E] invalid input!" << std::endl;
                 std::cerr.flush();
             }
-            tocken_cnt++;
+            token_cnt++;
             break;
         case 2:
-            tmp_orig_path = tocken_s;
-            tocken_cnt++;
+            tmp_orig_path = token_s;
+            token_cnt++;
             break;
             case 3:
-            tmp_dest_path = tocken_s;
+            tmp_dest_path = token_s;
             request_queue.push(Request(tmp_method, tmp_type, tmp_orig_path, tmp_dest_path));
-            tocken_cnt++;
+            token_cnt++;
             inputCnt++;
             break;
         default:
-            tocken_cnt = 0;
+            token_cnt = 0;
             break;
         }
     }
